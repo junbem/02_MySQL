@@ -139,4 +139,4 @@ WHERE
    OR
     menu_price = 9000)
    AND
-    menu_code > 10;
+    menu_code > 210;
