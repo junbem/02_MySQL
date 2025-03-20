@@ -149,4 +149,4 @@ SELECT *
             menu_price = 9000
         AND
             menu_code > 10;
---123
+--123123
