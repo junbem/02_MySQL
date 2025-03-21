@@ -84,7 +84,7 @@ FROM
 ORDER BY
     메뉴가격 DESC;
 
--- 기본 사칙연산 이욯가능, ORDER BY절을 사용하여 연산결과로 결과집합 정렬
+-- 기본 사칙연산 이용가능, ORDER BY절을 사용하여 연산결과로 결과집합 정렬
 SELECT
     menu_code 메뉴코드
      , menu_name 메뉴명
