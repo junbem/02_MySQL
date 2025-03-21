@@ -452,4 +452,3 @@ SELECT
   , MIN(menu_name)
   FROM
       tbl_menu;
-
