@@ -144,7 +144,107 @@ SELECT
     AND
          menu_code >10;
 
--- test222
+-- 5. BETWEEN 연산자
+-- 숫자, 문자열, 날짜/시간 값의 범위안에 있다면 TRUE를 반환하는 연산자
+SELECT
+       menu_name
+     , menu_price
+     , category_code
+    FROM
+        tbl_menu
+    WHERE
+        menu_price >=10000
+    AND
+        menu_price <= 25000;
+
+
+SELECT
+       menu_name
+     , menu_price
+     , category_code
+    FROM
+       tbl_menu
+    WHERE
+       menu_price BETWEEN 10000 AND 25000;
+
+
+-- 사전 등재순으로 문자열 범위 비교
+SELECT
+        menu_name
+     ,  menu_price
+     ,  category_code
+    FROM
+       tbl_menu
+    WHERE
+        menu_price BETWEEN '가' AND '마'
+    ORDER BY
+        menu_price;
+
+
+SELECT
+        menu_name
+     ,  menu_price
+     ,  category_code
+    FROM
+        tbl_menu
+    WHERE
+        menu_price BETWEEN 10000 AND 25000;
+
+SELECT
+        menu_name
+     ,  menu_price
+     ,  category_code
+    FROM
+        tbl_menu
+    WHERE
+        menu_price NOT BETWEEN 10000 AND 25000;
+
+-- 6. Like 연산자
+-- -- 비교하려는 값이 지정한 특정 패턴을 만족시키면 TRUE를 리턴하는 연산자로 '%', ''를 와일드카드로 사용할 수있다.
+
+-- 와일드카드란? 다른 문자로 대체가능한 특수한 의미를 가진 문자
+-- 1. '%' 글자가 없든지, 글자가 1개 이상 여러개를 의미한다.
+-- 2. 개수에 따라 문자 1개를 의미한다 _가 3개라면 문자 3개를 의미한다.
+
+-- %의 위치에 따라서 검색
+-- %문자     : 문자로 끝나는 내용만
+-- 문자%     : 문자로 시작하는 내용만
+-- %문자%    : 문자가 포함되어 있는 내용만
+
+SELECT
+        menu_name
+       ,menu_price
+    FROM
+        tbl_menu
+    WHERE
+        menu_name LIKE '마%';
+
+
+SELECT
+        menu_name
+      , menu_price
+    FROM
+        tbl_menu
+    WHERE
+        menu_name LIKE '%밥';
+
+-- 쥬스 앞글자가 3글자인 메뉴조회
+SELECT
+          menu_name
+        , menu_price
+    FROM
+          tbl_menu
+    WHERE
+          menu_name LIKE '______쥬스';
+
+
+SELECT
+    menu_name
+     , menu_price
+FROM
+    tbl_menu
+WHERE
+    menu_name LIKE '______쥬스';
 
 
 
