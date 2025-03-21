@@ -239,16 +239,100 @@ SELECT
 
 
 SELECT
-    menu_name
-     , menu_price
+        menu_name
+     ,  menu_price
+    FROM
+        tbl_menu
+    WHERE
+        menu_name LIKE '%갈치%';
+
+
+-- IN 연산자
+-- 카테고리 코드다 4,5,6 인 메뉴를 조회하세요.
+SELECT
+         menu_name
+       , category_code
+    FROM
+         tbl_menu
+    WHERE
+         category_code =4
+    OR
+        category_code = 5
+    OR
+        category_code = 6;
+
+
+SELECT
+       menu_name
+     , category_code
+    FROM
+       tbl_menu
+    WHERE
+       category_code IN (4,5,6);
+
+-- 부정표현
+SELECT
+          menu_name
+        , category_code
+    FROM
+        tbl_menu
+    WHERE
+        category_code NOT IN (4,5,6);
+
+-- IS NULL
+SELECT
+        category_code
+      , category_name
+      , ref_category_code
+    FROM
+        tbl_category
+    WHERE
+        ref_category_code IS NULL;
+
+-- null 처리함수를 통해 찾을 수 있다.
+SELECT
+       category_code
+     , category_name
+     , ref_category_code
+     , IFNULL(ref_category_code,0)
+    FROM
+        tbl_category
+    WHERE
+#         IFNULL(ref_category_code,0) = 0; -- MySQL 에서만 사용가능 함
+          COALESCE(ref_category_code,0) = 0; -- 모든 SQL 에서 사용가능 함
+
+--  부정표현
+SELECT
+    category_code
+     , category_name
+     , ref_category_code
 FROM
-    tbl_menu
+    tbl_category
 WHERE
-    menu_name LIKE '______쥬스';
+    ref_category_code IS NOT NULL;
+
+-- 실습 문제
+
+create table tb_escape_watch(
+        watchname varchar(40),
+        description varchar(200)
+);
+insert into tb_escape_watch values('금시계', '순금 99.99% 함유 고급시계');
+insert into tb_escape_watch values('은시계', '고객 만족도 99.99점를 획득한 고급시계');
+
+SELECT  * FROM  tb_escape_watch;
 
 
-
-
+-- escape 문자 : \%
+-- tb_escape_watch 테이블에서 description 칼럼에 99.99 %라는 글자가 들어가 있는 행만 추출하세요.
+SELECT
+          watchname
+        , description
+    FROM
+          tb_escape_watch
+    WHERE
+          description
+    LIKE '%99.99\%%';
 
 
 
