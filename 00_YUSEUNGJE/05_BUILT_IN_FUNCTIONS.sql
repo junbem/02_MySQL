@@ -146,4 +146,268 @@ SELECT ABS(-123), ABS(123)
 -- FLOOR: 내림값(현재수보다 작은 최대정수) 반환
 -- TRUNCATE(숫자, 소수점이하 자리수): 버림값 반환. 소수점이하 자리수는 필수이다.
 -- ROUND: 반올림값 반환
-SELECT CEILING(1234.56), FLOOR(1234.56), FLOOR(-0.65);
+SELECT CEILING(1234.56), FLOOR(1234.56123), FLOOR(-0.65);
+SELECT ROUND(1234.56), ROUND(1234.567,2), TRUNCATE(1234.56, 1), TRUNCATE(-0.65, 0)
+
+-- MOD(숫자1, 숫자2) 또는 숫자1 % 숫자2 또는 숫자1 MOD 숫자2
+-- MOD: 숫자1을 숫자 2로 나눈 나머지 추출
+SELECT MOD(75, 10), 75 % 10, 75 MOD 10;
+
+-- POW(숫자1, 숫자2), SQRT(숫자)
+-- POW: 거듭제곱값 추출
+-- SQRT: 제곱근을 추출
+SELECT
+    POW(2, 4), SQRT(16);
+
+-- RAND()
+-- RAND: 0이상 1미만의 실수를 구한다.
+-- m <= 임의의정수 < n
+-- FLOOR((RAND() * (n - m) + m)을 사용
+-- 1부터 10까지 난수 발생 : FLOOR(RAND() * 10 + 1)
+SELECT RAND(), FLOOR(RAND() * 10 + 1);
+
+
+-- =======================================
+-- 날짜시간처리함수
+-- =======================================
+-- ADDDATE(날짜, 일수), SUBDATE(날짜, 일수)
+-- ADDDATE(날짜, INTERVAL N 단위), SUBDATE(날짜, INTERVAL N 단위일)
+-- 위 두가지 문법을 지원한다.
+-- ADDDATE: 날짜를 기준으로 차이를 더함
+-- SUBDATE: 날짜를 기준으로 날짜를 뺌
+-- https://www.w3schools.com/sql/func_mysql_adddate.asp
+-- 지원하는 날짜/시간 단위
+
+SELECT NOW(), ADDDATE(NOW(), 1), SUBDATE(NOW(), 1);
+SELECT ADDDATE('2025-03-21', INTERVAL 30 DAY), ADDDATE('2025-03-21', INTERVAL 5 MONTH);
+SELECT SUBDATE('2025-03-21', INTERVAL 30 DAY), SUBDATE('2025-03-21', INTERVAL 5 MONTH);
+SELECT ADDDATE('2025-03-21', INTERVAL 1 MONTH);
+SELECT ADDDATE('2025-03-21', INTERVAL -1 MONTH);
+
+-- ADDTIME(날짜/시간, 시간), SUBTIME(날짜/시간, 시간)
+-- ADDTIME: 날짜 또는 시간을 기준으로 시간을 더함
+-- SUBTIME: 날짜 또는 시간을 기준으로 시간을 뺀다
+-- 년월일은 더하거나 뺄 수 없다.
+
+SELECT ADDTIME('2024-03-21 15:19:00', '1:0:1'), SUBTIME('2024-03-21 15:19:00', '4:0:1');
+
+-- CURDATE(), CURTIME(), NOW(), SYSDATE()
+-- CURDATE: 현재 연-월-일 추출
+-- CURTIME: 현재 시:분:초 추출
+-- NOW() 또는 SYSDATE() : 현재 연-월-일 시:분:초 추출
+
+SELECT
+       CURDATE()
+     , CURTIME()
+     , NOW()
+     , SYSDATE()
+
+-- CURDATE(), CURRENT_DATE(), CURRENT_DATE는 동일
+SELECT CURDATE(), CURRENT_DATE(), CURRENT_DATE;
+
+-- CURTIME(), CURRENT_TIME(), CURRENT_TIME은 동일
+SELECT CURTIME(), CURRENT_TIME(), CURRENT_TIME;
+
+-- NOW(), LOCALTIME(), LOCALTIME, LOCALTIMESTAMP(), LOCALTIMESTAMP는 동일
+SELECT NOW(), LOCALTIME(), LOCALTIME, LOCALTIMESTAMP(), LOCALTIMESTAMP;
+
+-- YEAR(날짜), MONTH(날짜), DAY(날짜),
+-- HOUR(시간), MINUTE(시간), SECOND(시간), MICROSECOND(시간)
+-- 날짜 또는 시간에서 연, 월, 일, 시, 분, 초, 밀리초를 추출
+SELECT YEAR(CURDATE()), MONTH(CURDATE()), DAY(CURDATE());
+SELECT HOUR(CURTIME()), MINUTE(CURTIME()), SECOND(CURTIME()), MICROSECOND(CURTIME())
+
+-- DATE(), TIME()
+-- DATE: 연-월-일만 추출
+-- TIME: 시:분:초만 추출
+SELECT DATE(NOW()), TIME(NOW())
+
+-- DATEDIFF(날짜1, 날짜2), TIMEDIFF(날짜1 또는 시간1, 날짜1 또는 시간2)
+-- DATEDIFF: 날짜1 - 날짜2의 일수를 반환
+-- TIMEDIFF: 시간1 - 시간2의 결과를 구함
+SELECT
+    DATEDIFF('2025-02-21', NOW()), TIMEDIFF('18:00:00', '15:32:12');
+
+SELECT
+       DATEDIFF('2025-09-09', NOW());
+
+-- EXTRACT(UNIT FROM 날짜시간)
+SELECT EXTRACT(YEAR_MONTH FROM NOW());
+SELECT EXTRACT(YEAR FROM NOW());
+SELECT EXTRACT(MONTH FROM NOW());
+SELECT EXTRACT(DAY FROM NOW());
+SELECT EXTRACT(DAY_HOUR FROM NOW());  -- HOUR, DAY_HOUR는 동일
+SELECT EXTRACT(HOUR FROM NOW());
+SELECT EXTRACT(MINUTE FROM NOW());
+SELECT EXTRACT(SECOND FROM NOW());
+SELECT EXTRACT(MICROSECOND FROM NOW());
+SELECT EXTRACT(MICROSECOND FROM '2025-03-21 15:12:33.11112222');
+
+-- DAYOFWEEK(날짜), MONTHNAME(), DAYOFYEAR(날짜)
+-- DAYOFWEEK: 요일 반환(1이 일요일)
+-- MONTHNAME: 해당 달의 이름 반환
+-- DAYOFYEAR: 해당 년도에서 몇 일이 흘렀는지 반환
+-- 일월화수목금토
+SELECT DAYOFWEEK(CURDATE()), MONTHNAME(CURDATE()), DAYOFYEAR(CURDATE())
+
+-- LAST_DAY(날짜)
+-- LAST_DAY: 해당 날짜의 달에서 마지막 날의 날짜를 구한다.
+SELECT LAST_DAY('20020601')
+
+-- QUARTER(날짜)
+-- QUARTER: 해당 날짜의 분기를 구함
+SELECT QUARTER('2025-03-21');
+
+-- DATE_FORMAT(날짜, 형식)
+-- https://www.w3schools.com/mysql/func_mysql_date_format.asp
+-- https://dev.mysql.com/doc/refman/8.0/en/locale-support.html Locale Support
+SELECT
+    NOW(),
+    DATE_FORMAT(NOW(), '%y-%m-%d') 년월일,
+    DATE_FORMAT(NOW(), '%H:%i:%s') 시분초,
+    DATE_FORMAT(NOW(), '%Y/%m/%d(%W)')
+;
+-- %w 일요일(0) ~ 토요일(6) 숫자반환
+
+-- =================================
+-- 형변환함수
+-- =================================
+-- 숫자 -> 문자 FORMAT
+-- 날짜/시간 -> 문자 DATE_FORMAT
+
+# 명시적 형변환(Explicit Conversion)
+-- CAST (expression AS 데이터형식 [(길이)])
+-- CONVERT (expression, 데이터형식 [(길이)])
+-- 데이터 형식으로 가능한 것은 BINARY, CHAR, DATE, DATETIME, DECIMAL, JSON, SIGNED INTEGER, TIME, UNSIGNED INTEGER 등이 있다.
+
+SELECT AVG(menu_price) FROM tbl_menu;
+SELECT CAST(AVG(menu_price) AS SIGNED INTEGER) '평균 메뉴 가격' FROM tbl_menu;
+SELECT CONVERT(AVG(menu_price), SIGNED INTEGER) '평균 메뉴 가격' FROM tbl_menu;
+
+SELECT CAST('2025$5$30' AS DATE);
+SELECT CAST('2025/5/30' AS DATE);
+SELECT CAST('2025%5%30' AS DATE);
+SELECT CAST('2025@5@30' AS DATE);
+
+-- 메뉴의 가격을 출력하는데 원을 붙여서 출력
+SELECT CONCAT(CAST(menu_price AS CHAR(5)), '원') FROM tbl_menu;
+
+# 암시적 형변환(Implicit Conversion)
+SELECT '1' + '2';
+SELECT CONCAT(menu_price, '원') FROM tbl_menu; -- menu_price 가 문자로 변환된다.
+SELECT 3 > 'MAY'; -- 문자는 0으로 변환된다.
+SELECT 5 > '6MAY', '6MAY' + 1;
+SELECT ADDDATE('2025-03-11', 1);  -- 날짜형으로 바뀔 수 있는 문자는 DATE형으로 변환된다.
+
+-- ==========================
+-- 기타함수
+-- ==========================
+
+# null 처리함수
+-- IFNULL(EXPRESSION, NULL일때 대체값)
+SELECT IFNULL(null, 'Hello World'), IFNULL('나는 널아니다?', 'Hello World')
+
+-- IF + ISNULL
+SELECT IF(ISNULL(null), '이름없음', '이름있음') as NAME;
+
+-- IF
+-- IF(조건, '조건이 일치할 경우의 값', '조건이 일치하지 않을 경우의 값')
+SELECT
+       menu_name
+     , IF(orderable_status = 'Y', '주문 가능', '주문 불가') orderable_status
+  FROM
+       tbl_menu;
+
+# 선택함수 case
+# 여러 가지 경우에 선택을할 수 있는 기능을 제공함 (범위값도 가능)
+
+# 	작성법							   리턴값 타입
+# ----------------------------------------------------------------------------------------------
+# (타입1)
+# CASE WHEN 조건1 THEN 결과1
+#      WHEN 조건2 THEN 결과2					결과
+#      WHEN 조건3 THEN 결과3
+#     ELSE 결과
+#  END
+# (타입2)
+# CASE 표현식
+# 	  WHEN 값1 THEN 결과1
+#     WHEN 값2 THEN 결과2
+#     WHEN 값3 THEN 결과3
+#     ELSE 결과
+#  END
+
+
+SELECT
+       menu_name
+     , menu_price
+     , CASE
+           WHEN menu_price < 5000 THEN '싼거'
+           WHEN menu_price BETWEEN 5000 AND 10000 THEN '적당한거'
+           WHEN menu_price BETWEEN 10000 AND 20000 THEN '좀 비싼거'
+           ELSE '많이 비싼거'
+        END 가격레벨
+  FROM tbl_menu;
+
+-- ------------------------------------------
+-- 그룹함수
+-- ------------------------------------------
+-- 하나 이상의 행을 그룹으로 묶어 연산하여 총합, 평균 등을 하나의 컬럼으로 리턴하는 함수
+
+# =========================================================================
+# |	구분		|		     설명				    |
+# =========================================================================
+# |	SUM		    |	그룹의 누적 합계를 리턴 함		|
+# |-----------------------------------------------------------------------|
+# |	AVG		    |	그룹의 평균을 리턴 함			|
+# |-----------------------------------------------------------------------|
+# |	COUNT		|	그룹의 총 개수를 리턴 함		|
+# |-----------------------------------------------------------------------|
+# |	MAX		    |	그룹의 최대값을 리턴 함		|
+# |-----------------------------------------------------------------------|
+# |	MIN		    |	그룹의 최소값을 리턴 함		|                         |
+# -------------------------------------------------------------------------
+
+-- 1. SUM
+-- 해당 컬럼 값들의 총 합을 구하는 함수
+-- 해당 컬럼의 값이 null인 행은 제외하고, 합계를 구한다.
+SELECT menu_price FROM tbl_menu;
+SELECT SUM(menu_price) FROM tbl_menu;
+
+SELECT ref_category_code FROM tbl_category;
+SELECT SUM(ref_category_code) FROM tbl_category;
+
+-- 2. AVG
+-- 해당 컬럼 값들의 평균을 구하는 함수
+-- 내부적으로 합계와 COUNT정보를 가지고 연산을 한다.
+SELECT AVG(menu_price) FROM tbl_menu;
+
+
+-- 3. COUNT
+-- 테이블에서 조건을 만족하는 행의 갯수를 반환하는 함수
+-- *는 모든 컬럼(하나의행)을 의미한다. 행이 존재하면 1로 카운트
+SELECT
+
+       COUNT(*) -- NULL 포함 COUNT
+     , COUNT(ref_category_code) -- NULL 미포함 COUNT
+  FROM
+       tbl_category;
+
+-- 4. MAX/MIN
+-- 그룹의 최대값과 최소값을 구하여 리턴하는 함수
+-- 숫자, 문자열, 날짜/시간에 대해서도 최대/최소를 처리할 수 있다.
+SELECT
+       MAX(menu_price)
+     , MIN(menu_price)
+     , MAX(menu_name)
+     , MIN(menu_name)
+  FROM
+       tbl_menu;
+
+
+
+
+
+
+
+
