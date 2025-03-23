@@ -382,7 +382,7 @@ SELECT  SUM(ref_category_code) FROM  tbl_category;
 
 -- 2. AVG
 -- 해당 컬럼 값들의 평균을 구하는 함수
--- 내부적으로 합계와 COUNT정보를 가지고 연산을 한다.
+-- 내부적으로 합계와 COUNT정보를 가지고 연산을 SUBSTRING(EMP_NO, 8)한다.
 
 SELECT  AVG(menu_price) FROM  tbl_menu;
 
