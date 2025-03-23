@@ -52,7 +52,7 @@ SELECT
 -- FIND_IN_SET: 찾을 문자열의 위치 반환, 문자열 리스트의 구분자는 반드시 ,여야 한다. + 띄어쓰기 불가
 SELECT FIND_IN_SET('바나나', '사과,딸기,바나나');
 
--- ORDER BY에서 특정 레코드를 뜰어올리기 위한 용도로 사용할 수 있다.
+-- ORDER BY에서 특정 레코드를 끌어올리기 위한 용도로 사용할 수 있다.
 SELECT * FROM tbl_menu ORDER BY FIND_IN_SET(menu_code, 12) DESC, FIND_IN_SET(menu_code, 15) DESC;
 
 -- INSTR(기준 문자열, 부분 문자열)
@@ -69,6 +69,8 @@ SELECT
 -- FORMAT(number, decimal_places)
 SELECT FORMAT(123456789.54321, 3);
 SELECT menu_code, FORMAT(menu_price, 0) "단위" FROM tbl_menu;
+
+SELECT BIN(65), OCT(65), HEX(65);
 
 -- INSERT(기준 문자열, 위치, 길이, 삽입할 문자열)
 -- INSERT: 기준 문자열의 위치부터 길이만큼을 지우고 삽입할 문자열을 끼워 넣는다.
@@ -147,6 +149,8 @@ SELECT ABS(-123), ABS(123);
 SELECT CEILING(1234.56), FLOOR(1234.56), FLOOR(-0.65);
 SELECT ROUND(1234.56), ROUND(1234.567), TRUNCATE(1234.56, 1), TRUNCATE(-0.65, 0);
 
+SELECT CONV('A', 16, 10), CONV('A', 16, 2), CONV(1010, 2, 8);
+
 -- MOD(숫자1, 숫자2) 또는 숫자1 % 숫자2 또는 숫자1 MOD 숫자2
 -- MOD: 숫자1을 숫자 2로 나눈 나머지 추출
 SELECT MOD(75, 10), 75 % 10, 75 MOD 10;
@@ -162,7 +166,9 @@ SELECT
 -- m <= 임의의정수 < n
 -- FLOOR((RAND() * (n - m) + m)을 사용
 -- 1부터 10까지 난수 발생 : FLOOR(RAND() * 10 + 1)
-SELECT RAND(), FLOOR(RAND() * 10 * 1);
+SELECT RAND(), FLOOR(RAND() * 10 + 1);
+
+SELECT SIGN(10.1), SIGN(0), SIGN(-10.1);
 
 -- =======================================
 -- 날짜시간처리함수

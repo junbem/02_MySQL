@@ -54,7 +54,7 @@ SELECT
 
 -- 2페이지
 SELECT
-    *
+        *
     FROM
         tbl_menu
     ORDER BY
