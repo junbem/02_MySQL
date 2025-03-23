@@ -48,35 +48,35 @@ SELECT
 
 -- 같지 않을 연산자와 함께 WHERE 절 사용
 SELECT
-    menu_name
-     , menu_price
-     , orderable_status
-FROM
-    tbl_menu
-WHERE
-#    orderable_status <> 'Y';
-#    orderable status != 'Y';
-#    orderable_status = 'n';
-    orderable_status = 'N'; -- MySQL은 비교나 검색을 수행할 때 기본적으로 대소문자 구분없이 비교 및 검색이 가능하다.
+        menu_name
+      , menu_price
+      , orderable_status
+    FROM
+        tbl_menu
+    WHERE
+    #    orderable_status <> 'Y';
+    #    orderable status != 'Y';
+    #    orderable_status != 'n';
+        orderable_status != 'N'; -- MySQL은 비교나 검색을 수행할 때 기본적으로 대소문자 구분없이 비교 및 검색이 가능하다.
 
 -- 대소비교 연산자와 함께 WHERE 절 사용
 SELECT
-    menu_name
-     , menu_price
-     , orderable_status
-FROM
-    tbl_menu
-WHERE
-    menu_price > 20000;
+        menu_name
+      , menu_price
+      , orderable_status
+    FROM
+        tbl_menu
+    WHERE
+        menu_price > 20000;
 
 SELECT
-    menu_name
-     , menu_price
-     , orderable_status
-FROM
-    tbl_menu
-WHERE
-    menu_price <= 20000;
+        menu_name
+      , menu_price
+      , orderable_status
+    FROM
+        tbl_menu
+    WHERE
+        menu_price <= 20000;
 
 -- 2. AND 연산자와 함께 WHERE절 사용
 -- 0은 FALSE, 0외 숫자는 TRUE로 암시적 형변환 후 평가된다.
@@ -295,13 +295,13 @@ SELECT
     FROM
         tbl_category
     WHERE
-        IFNULL(ref_category_code, 0) = 0;
+        IFNULL(ref_category_code, 0) = 0; -- NULL이면 0으로 출력해줌
 
 SELECT
         category_code
       , category_name
       , ref_category_code
-      , IFNULL(ref_category_code, 0) -- NULL이면 0으로 출력해줌
+      , IFNULL(ref_category_code, 0)
     FROM
         tbl_category
     WHERE
