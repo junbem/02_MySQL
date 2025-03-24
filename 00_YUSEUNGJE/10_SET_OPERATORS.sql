@@ -60,7 +60,6 @@ FROM tbl_menu
 WHERE menu_price < 9000;
 
 # INTERSECT
-
 -- 1) inner join 활용
 SELECT
        a.menu_code, a.menu_name, a.menu_price
@@ -75,6 +74,38 @@ SELECT
   ON a.menu_code = b.menu_code
  WHERE a.category_code = 10;
 
+-- 2) IN 연산자 활용
+SELECT
+       menu_code, menu_name, menu_price
+     , category_code, orderable_status
+  FROM
+       tbl_menu
+ WHERE
+       category_code = 10
+   AND
+       menu_code IN (SELECT menu_code
+                      WHERE menu_price < 9000
+           );
+
+-- ==============================
+-- MINUS
+-- ==============================
+SELECT *
+  FROM (
+           SELECT
+                  menu_code, menu_name, menu_price
+                , category_code, orderable_status
+             FROM tbl_menu
+            WHERE category_code = 10
+       ) a
+  LEFT JOIN (SELECT
+                 menu_code, menu_name, menu_price
+                  , category_code, orderable_status
+             FROM tbl_menu
+             WHERE menu_price < 9000
+  ) b ON a.menu_code = b.menu_code
+ WHERE
+     b.menu_code IS NULL;
 
 
 
