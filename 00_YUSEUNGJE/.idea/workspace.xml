@@ -5,14 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="be1e96dd-e2b6-4a9d-a752-c82e8e0523f1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/12_TRANSACTION.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/13_DDL.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/14_CONSTRAINTS.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b9fa1aa5-1919-44d7-99b5-e3bdcbaa9f9c.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/b9fa1aa5-1919-44d7-99b5-e3bdcbaa9f9c.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/11_DML.sql" beforeDir="false" afterPath="$PROJECT_DIR$/11_DML.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +84,7 @@
       <workItem from="1742516151151" duration="26765000" />
       <workItem from="1742771833816" duration="308000" />
       <workItem from="1742772152148" duration="17876000" />
-      <workItem from="1742795389869" duration="10929000" />
+      <workItem from="1742795389869" duration="12696000" />
     </task>
     <servers />
   </component>
