@@ -47,10 +47,13 @@ SELECT
     , a.EMP_NO 사원번호
     , a.EMAIL 이메일
     , a.HIRE_DATE 입사일
-FROM
+  FROM
       employee a
-JOIN job b ON a.JOB_CODE = b.JOB_CODE
-WHERE b.job_name = '대리'
+  JOIN job b ON a.JOB_CODE = b.JOB_CODE
+ WHERE
+    a.QUIT_YN = 'N'
+   AND
+    b.job_name = '대리'
 ORDER BY SALARY DESC;
 
 -- 3. 재직 중인 직원들을 대상으로 부서별 인원, 급여 합계, 급여 평균을 출력하고,
