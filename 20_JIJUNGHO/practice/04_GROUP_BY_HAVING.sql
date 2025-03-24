@@ -12,10 +12,9 @@ USE empdb;
         J6           6              2624373
         J7           4              2017500
 */
-SELECT
-    job_code
-  , COUNT(job_code)
-  , format(AVG(salary), 0)
+SELECT job_code
+     , COUNT(job_code)
+     , FORMAT(AVG(salary), 0)
   FROM
       employee
  WHERE
@@ -38,8 +37,18 @@ SELECT
     2001             3
     ...
     총 출력row는 17
-
 */
+SELECT EXTRACT(YEAR FROM hire_date) AS 입사년
+     , COUNT(*)                     AS 인원수
+  FROM
+      employee
+ WHERE
+     job_code != 'J1'
+ GROUP BY
+     EXTRACT(YEAR FROM hire_date)
+ ORDER BY
+     입사년;
+
 
 
 -- 3. 성별 급여의 평균(정수처리), 급여의 합계, 인원수를 조회한 뒤 인원수로 내림차순을 정렬 하시오.
@@ -51,10 +60,21 @@ SELECT
     남       "3,317,333"     "49,760,000"       15
     여       "2,757,360"     "24,816,240"       9
 */
+SELECT CASE
+           WHEN SUBSTR(emp_no, 8, 1) IN ('1', '3', '5', '7') THEN '남'
+           ELSE '여' END                    AS 성별
+     , FORMAT(TRUNCATE(AVG(salary), 0), 0) AS 평균
+     , FORMAT(TRUNCATE(SUM(salary), 0), 0) AS 합계
+     , COUNT(*)                            AS 인원수
+  FROM
+      employee
+ GROUP BY
+     CASE
+         WHEN SUBSTR(emp_no, 8, 1) IN ('1', '3', '5', '7') THEN '남'
+         ELSE '여' END
 
 
 -- 4. 직급별 인원수가 3명이상이 직급과 총원을 조회
-
 /*
     ------------ 출력 예시 ---------------
     직급          인원수
@@ -65,6 +85,11 @@ SELECT
     J5              3
     J6              6
     J7              4
-
-
 */
+SELECT job_code, COUNT(*)
+  FROM
+      employee gr
+ WHERE
+     job_code != 'J1'
+ GROUP BY
+     job_code
