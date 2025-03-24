@@ -72,6 +72,8 @@ SELECT CASE
      CASE
          WHEN SUBSTR(emp_no, 8, 1) IN ('1', '3', '5', '7') THEN '남'
          ELSE '여' END
+ ORDER BY
+     인원수 DESC;
 
 
 -- 4. 직급별 인원수가 3명이상이 직급과 총원을 조회
