@@ -30,9 +30,6 @@ VALUES ('초콜릿맛죽', 6500, 7, 'Y');
 INSERT INTO tbl_menu(orderable_status, menu_price, menu_name, category_code)
 VALUES ('Y', 25000, '매생이케익', 10);
 
-INSERT INTO tbl_menu(orderable_status, menu_price, menu_name, category_code)
-VALUES ('Y', 25000, '매생이케익2', 10);
-
 -- ==============================================
 -- UPDATE
 -- ==============================================
@@ -40,5 +37,77 @@ SELECT
        menu_code
      , menu_name
      , category_code
-  FROM tbl_menu
+  FROM tbl_menu;
 
+UPDATE
+       tbl_menu -- 수정할 대상테이블
+   SET
+       category_code = 10
+     , menu_name = '매생이쉐이크'  -- 여러개의 값을 동시에 수정할 경우 콤마(,)를 사용한다.
+ WHERE
+       menu_code = 25;
+
+-- SUBQUERY를 활용할 수 도 있다.
+-- 다만 MySQL은 Oracle과 달리 update나 delete시 자기 자신 테이블의 데이터를 사용할 시 1093에러가 발생한다.
+UPDATE
+    tbl_menu
+SET
+    category_code = (SELECT menu_code
+                     FROM tbl_menu
+                     WHERE menu_name = '우럭스무디')
+WHERE
+    menu_code = 25;
+
+-- 이때 SUBQUERY를 하나 더 사용하여 임시테이블로 사용하게하면 해결할 수 있다.
+UPDATE
+    tbl_menu
+SET
+    category_code = (SELECT tmp.menu_code
+                     FROM (SELECT menu_code
+                             FROM tbl_menu
+                            WHERE menu_name = '우럭스무디') tmp
+                    )
+WHERE
+    menu_code = 25;
+
+SELECT * FROM tbl_menu WHERE menu_code = 25;
+
+-- ==================================
+-- DELETE
+-- ==================================
+-- 테이블의 행을 삭제하는 구문이다.
+-- 테이블의 행의 갯수가 줄어든다.
+
+DELETE
+  FROM tbl_menu
+ WHERE menu_code = 25;
+
+-- LIMIT를 활용한 행삭제(offset 지정은안된다)
+DELETE
+  FROM tbl_menu
+ ORDER BY menu_price
+ LIMIT 2;
+
+-- 테이블 전체 행 삭제
+DELETE FROM tbl_menu;
+
+-- TRUNCATE를 실행하면 ROLLBACK을 할 수없다.
+# TRUNCATE table tb_escape_watch;
+
+-- ==============================
+-- REPLACE
+-- ==============================
+-- INSERT시 PRIMARY KEY 또는 UNIQUE KEY가 충돌이 발생할 수 있다면
+-- REPLACE를 통해 중복된 데이터를 덮어쓸 수 있다.
+
+INSERT INTO tbl_menu
+VALUES (17, '참기름맛소주', 7000, 10, 'Y');
+
+REPLACE INTO tbl_menu
+VALUES (17, '참기름맛소주', 7000, 10, 'Y');
+
+-- INTO는 생략 가능
+REPLACE INTO tbl_menu
+VALUES (17, '들기름맛소주', 7000, 10, 'Y');
+
+SELECT * FROM tbl_menu WHERE menu_code = 17;
