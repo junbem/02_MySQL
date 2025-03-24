@@ -134,7 +134,7 @@ SELECT
  WHERE
        menu_price = (SELECT MAX(b.menu_price)
                        FROM tbl_menu b
-                      WHERE b.category_code = a.category_code)
+                      WHERE b.category_code = a.category_code);
 
 -- 카테고리별 평균 가격보다 높은 가격의 메뉴 조회
 SELECT
@@ -148,7 +148,7 @@ FROM
 WHERE
     menu_price > (SELECT AVG(b.menu_price)
                   FROM tbl_menu b
-                  WHERE b.category_code = a.category_code)
+                  WHERE b.category_code = a.category_code);
 -- =========================
 -- 스칼라 서브쿼리
 -- =========================
