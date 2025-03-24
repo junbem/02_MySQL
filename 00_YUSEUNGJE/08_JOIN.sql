@@ -56,3 +56,42 @@ SELECT
      , b.category_name
   FROM tbl_menu a
   RIGHT JOIN tbl_category b USING(category_code);
+
+-- ====================
+-- CROSS JOIN
+-- ===================
+# 카테이션곱(Cartesian Product)
+-- 모든 경우의 수를 구하므로, 결과는 두 테이블의 컬럼 수를 곱한 개수가 나온다.
+-- 한쪽 테이블의 모든 행과 다른쪽 테이블의 모든 행을 조인시킨다.
+
+-- CROSS JOIN은 조건절이 없다. 또는 join문의 on절이 없을경우
+SELECT
+       a.menu_name
+     , b.category_name
+  FROM tbl_menu a
+  CROSS JOIN tbl_category b;
+
+-- ============================
+-- SELF JOIN
+-- ============================
+-- 조인은 두 개 이상의 서로 다른 테이블을 연결하기도 하지만, 같은 테이블을 조인하는 경우가 있다.
+-- 이러한 경우 자기 자신과 조인을 맺는 것이라하여 SELF JOIN이라고 한다.
+
+SELECT
+       b.category_name 상위카테고리
+     , a.category_name 카테고리
+  FROM tbl_category a
+  JOIN tbl_category b
+    ON a.ref_category_code = b.category_code;
+
+-- ------------------------------------------------------
+SELECT
+       a.EMP_NAME
+     , b.DEPT_TITLE
+     , c.JOB_NAME
+     , e.NATIONAL_NAME
+  FROM employee a
+  LEFT JOIN department b ON a.DEPT_CODE = b.DEPT_ID
+  LEFT JOIN job c ON a.JOB_CODE = c.JOB_CODE
+  LEFT JOIN location d ON b.LOCATION_ID = d.LOCAL_CODE
+  LEFT JOIN nation e ON d.NATIONAL_CODE = e.NATIONAL_CODE;
