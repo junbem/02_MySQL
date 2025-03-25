@@ -74,11 +74,14 @@ ORDER BY
 
 -- 5. 사원별 입사일, 퇴사일, 근무기간(일)을 조회하세요. 퇴사자 역시 조회되어야 합니다.
 SELECT
-    HIRE_DATE,
-    QUIT_DATE,
+    HIRE_DATE AS 입사일,
+    CASE
+        WHEN QUIT_DATE IS NULL THEN '근무중'
+        ELSE QUIT_DATE
+        END AS 퇴사일,
     QUIT_YN
-FROM
-    employee;
+FROM employee;
+
 /* 출력 (24 row)
     선동일 1990-02-06 00:00:00  12488 N
     송종기 2001-09-01 00:00:00  8263  N

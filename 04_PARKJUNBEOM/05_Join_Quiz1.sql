@@ -41,6 +41,17 @@ SELECT EMP_ID 사원번호, EMP_NAME 사원명, PHONE 전화번호, HIRE_DATE �
 -- 3. 재직 중인 직원들을 대상으로 부서별 인원, 급여 합계, 급여 평균을 출력하고,
 --    마지막에는 전체 인원과 전체 직원의 급여 합계 및 평균이 출력되도록 하세요.
 --    단, 출력되는 데이터의 헤더는 컬럼명이 아닌 ‘부서명’, ‘인원’, ‘급여합계’, ‘급여평균’으로 출력되도록 하세요. (ROLLUP사용)
+    SELECT
+        b.DEPT_TITLE 부서명,
+        COUNT(a.EMP_NO) 인원,
+        SUM(a.SALARY) 급여합계,
+        AVG(a.SALARY) 급여평균
+    FROM employee a
+    JOIN department b ON a.DEPT_CODE = b.DEPT_ID
+    WHERE a.QUIT_YN LIKE 'N'
+    GROUP BY
+        b.DEPT_TITLE
+    WITH ROLLUP;
 
     /*
         -------------------------- 출력 예시 -----------------------------
@@ -59,7 +70,16 @@ SELECT EMP_ID 사원번호, EMP_NAME 사원명, PHONE 전화번호, HIRE_DATE �
 
 -- 4. 전체 직원의 사원명, 주민등록번호, 전화번호, 부서명, 직급명을 출력하세요.
 --    단, 입사일을 기준으로 오름차순 정렬되도록 출력하세요.
-
+    SELECT
+        a.EMP_NAME 사원명,
+        a.EMP_NO 주민등록번호,
+        a.PHONE 전화번호,
+        d.DEPT_TITLE 부서명,
+        j.JOB_NAME 직급명
+    FROM employee a
+    JOIN empdb.department d on d.DEPT_ID = a.DEPT_CODE
+    JOIN empdb.job j on j.JOB_CODE = a.JOB_CODE
+    ORDER BY a.HIRE_DATE ASC;
 
     /*
         ------------------- 출력 예시 ---------------------------------
@@ -77,7 +97,8 @@ SELECT EMP_ID 사원번호, EMP_NAME 사원명, PHONE 전화번호, HIRE_DATE �
     */
 
 -- 5. 2020년 12월 25일이 무슨 요일인지 조회하시오.(Join아님)
-
+    SELECT
+        DAYNAME("2020-12-25") AS "요일";
     /*
         -------- 출력예시 ---------
         요일
@@ -87,6 +108,15 @@ SELECT EMP_ID 사원번호, EMP_NAME 사원명, PHONE 전화번호, HIRE_DATE �
 
 -- 6. 주민번호가 70년대 생이면서 성별이 여자이고,
 --    성이 전씨인 직원들의 사원명, 주민번호, 부서명, 직급명을 조회하시오.
+    SELECT
+        a.EMP_NAME 사원명,
+        a.EMP_NO 주민번호,
+        d.DEPT_TITLE 부서명,
+        j.JOB_NAME 직급명
+    FROM employee a
+    JOIN empdb.department d on d.DEPT_ID = a.DEPT_CODE
+    JOIN empdb.job j on j.JOB_CODE = a.JOB_CODE
+    WHERE a.EMP_NO = '7%';
 
     /*
         -------------------- 출력 예시 -------------------------
