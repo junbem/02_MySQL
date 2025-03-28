@@ -127,6 +127,11 @@ SELECT EMP_ID 사원번호, EMP_NAME 사원명, PHONE 전화번호, HIRE_DATE �
 
 
 -- 7. 이름에 '형'자가 들어가는 직원들의 사번, 사원명, 직급명을 조회하시오.
+    SELECT
+        e.EMP_NO '사번', e.EMP_NAME '사원명', j.JOB_NAME '직급명'
+        FROM employee e
+        JOIN empdb.job j on j.JOB_CODE = e.JOB_CODE
+        WHERE e.EMP_NAME LIKE '%형%';
 
     /*
         ------------------- 출력 예시 -----------------------
@@ -136,6 +141,12 @@ SELECT EMP_ID 사원번호, EMP_NAME 사원명, PHONE 전화번호, HIRE_DATE �
     */
 
 -- 8. 해외영업팀에 근무하는 사원명, 직급명, 부서코드, 부서명을 조회하시오.
+    SELECT
+        e.EMP_NAME '사원명', j.JOB_NAME '직급명', e.DEPT_CODE '부서코드', d.DEPT_TITLE '부서명'
+        FROM employee e
+        JOIN empdb.department d on d.DEPT_ID = e.DEPT_CODE
+        JOIN empdb.job j on j.JOB_CODE = e.JOB_CODE
+    WHERE DEPT_TITLE LIKE '해외영업%';
     /*
         ------------------- 출력 예시 ---------------------------
         사원명     직급명     부서코드        부서명
